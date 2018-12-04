@@ -1,20 +1,50 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
-
-var config = {
-    apiKey: "AIzaSyC1f-LJAxbOwdPKnYUAsZwS9AU9wW74SPQ",
-    authDomain: "fir-test-e2d19.firebaseapp.com",
-    databaseURL: "https://fir-test-e2d19.firebaseio.com",
-    projectId: "fir-test-e2d19",
-    storageBucket: "fir-test-e2d19.appspot.com",
-    messagingSenderId: "946079702917"
-};
+import config from './const/config';
 
 firebase.initializeApp(config);
-const data = firebase.database();
+const db = firebase.database();
+const messageRef = db.ref('message');
+const $form = document.getElementById('js-form');
+const $user = document.getElementById('js-form-user');
+const $comment = document.getElementById('js-form-comment');
 
-class store {
-    constructor() {
-        
+console.log($form, $user, $comment);
+
+
+class Render {
+    commentList(val) {
+
     }
 }
+class Action {
+    constructor() {  
+    }
+    writeMessage(user, comment) {
+        messageRef.set({
+            user: user,
+            comment: comment
+        })
+    }
+}
+
+const action = new Action();
+
+$form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let user = $user.value;
+    let comment = $comment.value;
+    if(user && comment) {
+        action.writeMessage(user, comment);
+    }
+}, false);
+
+
+messageRef.once('value', (snapshot) => {
+    console.log(snapshot.val())
+});
+
+
+messageRef.on('value', (snapshot) => {
+    console.log(snapshot.val())
+});
