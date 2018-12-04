@@ -9,9 +9,6 @@ const $form = document.getElementById('js-form');
 const $user = document.getElementById('js-form-user');
 const $comment = document.getElementById('js-form-comment');
 
-console.log($form, $user, $comment);
-
-
 class Render {
     commentList(val) {
 
@@ -21,7 +18,7 @@ class Action {
     constructor() {  
     }
     writeMessage(user, comment) {
-        messageRef.set({
+        messageRef.push({
             user: user,
             comment: comment
         })
